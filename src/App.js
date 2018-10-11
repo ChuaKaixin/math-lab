@@ -1,27 +1,58 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import MainMenu from './components/mainmenu/MainMenu';
+import Challenge from './components/challenge/Challenge';
+import Statistics from './components/statistics/Statistics';
 
 class App extends Component {
+  state = {
+    chosenOption:'mainmenu',
+    apprenticeLevelStatistics:[],
+    adeptLevelStatistics:[],
+    masterLevelStatistics:[]
+  }
   render() {
+    let {chosenOption} = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+      {chosenOption === 'mainmenu' && 
+        <MainMenu handleChallengeSelection={this.handleChallengeSelection}/>
+      }
+      {chosenOption === 'apprentice' && 
+        <Challenge quizType='apprentice' updateQuizStatistics={this.updateQuizStatistics} goBackToMainMenu={this.goBackToMainMenu}/>
+      }
+      {chosenOption === 'statistics' && 
+        <Statistics apprenticeLevelStatistics={this.state.apprenticeLevelStatistics} goBackToMainMenu={this.goBackToMainMenu}/>
+      }
       </div>
-    );
+  );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.state.apprenticeLevelStatistics.length !==nextState.apprenticeLevelStatistics.length) {
+         return false;
+    }
+    return true;
+}
+
+  updateQuizStatistics = (accuracy, correctAnswers, quizType) => {
+    switch(quizType) {
+      case "apprentice":
+        let apprenticeLevelStatistics = [...this.state.apprenticeLevelStatistics];
+        apprenticeLevelStatistics.push({accuracy, correctAnswers});
+        this.setState({apprenticeLevelStatistics});
+        break;
+      default:
+        break;
+    }
+  }
+
+  goBackToMainMenu = () => {
+    this.setState({chosenOption : 'mainmenu'})
+  }
+
+  handleChallengeSelection = (challenge) => {
+    this.setState({chosenOption: challenge});
   }
 }
 

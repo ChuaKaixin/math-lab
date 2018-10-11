@@ -30,3 +30,14 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: auto;
+  max-width: 70%;
+}
+
+h1 {
+  font-family: 'Righteous', cursive;
+  font-size: 10em;
+  color: #0066ff;
+}
