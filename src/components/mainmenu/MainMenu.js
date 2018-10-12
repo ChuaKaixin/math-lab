@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+import Constants from '../utilities/Constants';
 
 class MainMenu extends Component {
     render() {
         return (
-            <div>
-                <h1>Math Lab</h1>
-                <p>Choose Your Challenge...</p>
-                <button onClick={() => this.props.handleChallengeSelection('apprentice')}>Apprentice</button>
-                <button onClick={() => this.props.handleChallengeSelection('adept')}>Adept</button>
-                <button onClick={() => this.props.handleChallengeSelection('master')}>Master</button>
-                <button onClick={() => this.props.handleChallengeSelection('statistics')}>Statistics</button>
+            <div className="frontPage">
+                <div className="spacer"></div>
+                <div className="whiteBorder">
+                    <h1 className="frontPageTitle">Math Classroom</h1>
+                    <div>
+                        <div className="frontPageLinks"><Link to={`/quiz/${Constants.level1subURL}`} className="frontPageText">{Constants.level1Description}</Link></div>
+                        <div className="frontPageLinks"><Link to={`/quiz/${Constants.level2subURL}`} className="frontPageText">{Constants.level2Description}</Link></div>
+                        <div className="frontPageLinks"><Link to={`/quiz/${Constants.level3subURL}`} className="frontPageText">{Constants.level3Description}</Link></div>
+                        <div className="frontPageLinks"><Link to='/statistics' className="frontPageText">Statistics</Link></div>
+                    </div>
+                </div>
             </div>
         );
     }

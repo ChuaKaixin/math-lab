@@ -1,35 +1,56 @@
 import React, { Component } from 'react';
 import generateQuestion from './MathQuestionGenerator'
+import Label from 'react-bootstrap/lib/Label';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import {Button} from 'react-bootstrap';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+
 class Questions extends Component {
     state = {
         question: generateQuestion(this.props.quizType),
-        questionAnswered: false
+        questionAnswered: false,
+        chosenAnswerIndex: 0
     }
     render() {
-        let {questionAnswered} = this.state;
+        let {questionAnswered, chosenAnswerIndex} = this.state;
         let {num1, num2, operation, answer} = this.state.question;
         let {correctAnswerPosition} = answer;
         return (
             <div>
                 <form>
                     <div>
-                        <p>{num1} {operation} {num2} = ?</p>
-                        <ol>
-                            {answer.answerArray.map((item, index) => <ul key={index} className={this.generateAnswerDisplay(index, correctAnswerPosition)} onClick={(event)=> this.updateResults(index, event)}>{item}</ul>)}
-                        </ol>
+                        <div className="questionGrid">
+                            <div></div>
+                            <div><h1><Label>{num1}</Label></h1></div>
+                            <div><h1>{operation}</h1></div>
+                            <div><h1><Label>{num2}</Label></h1></div>
+                            <div><h1>=</h1></div>
+                            <div><h1><Label>?</Label></h1></div>
+                            <div></div>
+                        </div>
+                        <div className="answerGrid">
+                            <ListGroup>
+                                {answer.answerArray.map((item, index) => 
+                                <ListGroupItem bsStyle={this.getAnswerDisplay(index, correctAnswerPosition)} key={index}>
+                                    <span onClick={(event)=> this.updateResults(index, event)}>
+                                    {questionAnswered&&index===chosenAnswerIndex?'*':''}{item}
+                                    </span>
+                                </ListGroupItem>)}
+                            </ListGroup>
+                        </div>
                     </div>
-                    {questionAnswered && 
-                        <button onClick={this.showNextQuestion}>Next</button>
-                    }
+                    <Button bsStyle="primary" onClick={this.showNextQuestion}>Next</Button>
                 </form>
-                <button onClick={this.props.goBackToMainMenu}>Menu</button>
             </div>
         );
     }
 
     showNextQuestion = (event) => {
         event.preventDefault();
-        this.setState({question: generateQuestion(this.props.quizType)});
+        this.setState({
+            question: generateQuestion(this.props.quizType),
+            questionAnswered: false
+        });
     }
 
     updateAnswer = (event) => {
@@ -38,19 +59,23 @@ class Questions extends Component {
 
     updateResults = (optionClicked, event) => {
         event.preventDefault();
+        if(!this.state.questionAnswered) {
         this.props.updateQuizResults(optionClicked===this.state.question.answer.correctAnswerPosition);
-        this.setState({questionAnswered:true})
+        this.setState({
+            questionAnswered:true,
+            chosenAnswerIndex:optionClicked
+        })}
     }
 
-    generateAnswerDisplay = (index, correctAnswerPosition) => {
+    getAnswerDisplay = (index, correctAnswerPosition) => {
         if(this.state.questionAnswered) {
             if(index===correctAnswerPosition) {
-                return "optionDisplayCorrect";
+                return "success";
             } else {
-                return "optionDisplayInCorrect";
+                return "danger";
             }
         } else {
-            return "optionDisplayNotAnswered";
+            return "warning";
         }
     }
 }

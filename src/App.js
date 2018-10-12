@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
-import MainMenu from './components/mainmenu/MainMenu';
-import Challenge from './components/challenge/Challenge';
-import Statistics from './components/statistics/Statistics';
+import PageRouter from './components/utilities/PageRouter';
+import Constants from './components/utilities/Constants';
+import {BrowserRouter as Router} from 'react-router-dom'
 
 class App extends Component {
   state = {
-    chosenOption:'mainmenu',
     apprenticeLevelStatistics:[],
     adeptLevelStatistics:[],
     masterLevelStatistics:[]
   }
   render() {
-    let {chosenOption} = this.state;
+    let {apprenticeLevelStatistics, adeptLevelStatistics, masterLevelStatistics} = this.state;
     return (
-      <div>
-      {chosenOption === 'mainmenu' && 
-        <MainMenu handleChallengeSelection={this.handleChallengeSelection}/>
-      }
-      {chosenOption === 'apprentice' && 
-        <Challenge quizType='apprentice' updateQuizStatistics={this.updateQuizStatistics} goBackToMainMenu={this.goBackToMainMenu}/>
-      }
-      {chosenOption === 'statistics' && 
-        <Statistics apprenticeLevelStatistics={this.state.apprenticeLevelStatistics} goBackToMainMenu={this.goBackToMainMenu}/>
-      }
-      </div>
+      <Router>
+        <PageRouter 
+        updateQuizStatistics={this.updateQuizStatistics} 
+        apprenticeLevelStatistics={this.state.apprenticeLevelStatistics}
+        adeptLevelStatistics={adeptLevelStatistics}
+        masterLevelStatistics={masterLevelStatistics}/>
+      </Router>
   );
   }
 
@@ -37,22 +32,14 @@ class App extends Component {
 
   updateQuizStatistics = (accuracy, correctAnswers, quizType) => {
     switch(quizType) {
-      case "apprentice":
+      case Constants.level1Description:
         let apprenticeLevelStatistics = [...this.state.apprenticeLevelStatistics];
-        apprenticeLevelStatistics.push({accuracy, correctAnswers});
+        apprenticeLevelStatistics.push({attempt: apprenticeLevelStatistics.length+1, accuracy, correctAnswers});
         this.setState({apprenticeLevelStatistics});
         break;
       default:
         break;
     }
-  }
-
-  goBackToMainMenu = () => {
-    this.setState({chosenOption : 'mainmenu'})
-  }
-
-  handleChallengeSelection = (challenge) => {
-    this.setState({chosenOption: challenge});
   }
 }
 

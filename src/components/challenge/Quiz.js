@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Countdown from 'react-countdown-now';
-import ProgressBar from 'react-bootstrap/lib/ProgressBar';
 import Result from './Result';
 import Questions from './Questions';
+import {Label, Well, ProgressBar} from 'react-bootstrap';
+import Constants from '../utilities/Constants';
 
 class Quiz extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Quiz extends Component {
             correctAnswers: 0,
             wrongAnswers: 0,
         }
-        this.timeAllowedInSeconds = 5;
+        this.timeAllowedInSeconds = 10;
     }
 
     render() {
@@ -23,28 +24,44 @@ class Quiz extends Component {
         );
     }
 
-    CompletionDisplay = () => <Result quizType={this.props.quizType} updateQuizStatistics={this.props.updateQuizStatistics} goBackToMainMenu={this.props.goBackToMainMenu} correctAnswers={this.state.correctAnswers} wrongAnswers={this.state.wrongAnswers}/>;
+    CompletionDisplay = () => {
+        return (
+            <div className="quizBody">
+                <Result quizType={this.props.quizType} quizStats={this.props.quizStats} updateQuizStatistics={this.props.updateQuizStatistics} correctAnswers={this.state.correctAnswers} wrongAnswers={this.state.wrongAnswers}/>
+            </div>
+        )
+    ;}
     renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
             // Render a complete state
             return this.CompletionDisplay();
         } else {
             // Render a countdown
-            return <div>
-                    <span>{hours}:{minutes}:{seconds}</span>
-                    <span><ProgressBar active striped bsStyle={this.updateProgressBarStyleAccordingToTimeLeft(seconds)} min={0} max={this.timeAllowedInSeconds} now={parseInt(seconds, 10)}/></span>
+            return <div className="quizBody">
+                    <Well>
+                        <h4>Challenge: {this.props.quizType}</h4>
+                        <h5>
+                        <Label bsStyle="success">{this.state.correctAnswers} CORRECT</Label>
+                        <Label bsStyle="danger">{this.state.wrongAnswers} WRONG</Label>
+                        </h5>
+                    </Well>
+                    <p>Time Remaining: {hours}:{minutes}:{seconds}</p>
+                    <span>
+                        <ProgressBar active striped bsStyle={this.getProgressBarStyleAccordingToTimeLeft(seconds)} min={0} max={this.timeAllowedInSeconds} now={parseInt(seconds, 10)}/>
+
+                    </span>
                     <Questions quizType={this.props.quizType} goBackToMainMenu={this.props.goBackToMainMenu} updateQuizResults={this.updateQuizResults}/>
                 </div>;
         }
         };
     
-    updateProgressBarStyleAccordingToTimeLeft= (currentSeconds) => {
+    getProgressBarStyleAccordingToTimeLeft= (currentSeconds) => {
         if(currentSeconds/this.timeAllowedInSeconds > 0.8) {
-            return "info";
+            return Constants.progressBarInfo;
         } else if (currentSeconds/this.timeAllowedInSeconds <= 0.8) {
-            return "warning";
+            return Constants.progressBarWarning;
         } else {
-            return "danger";
+            return Constants.progressBarDanger;
         }
 
     }
