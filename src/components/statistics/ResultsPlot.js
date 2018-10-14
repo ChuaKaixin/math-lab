@@ -13,7 +13,7 @@ const ResultsPlot = ({previousResults, latestResult}) => {
         {manipulatedResults.length > 0 && 
         <ResponsiveContainer width="100%" height="100%">
             <BarChart data={manipulatedResults}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="5 5" />
                 <XAxis dataKey="attempt" />
                 <YAxis />
                 <Tooltip />

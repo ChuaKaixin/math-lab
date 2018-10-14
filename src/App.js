@@ -8,7 +8,8 @@ class App extends Component {
   state = {
     apprenticeLevelStatistics:[],
     adeptLevelStatistics:[],
-    masterLevelStatistics:[]
+    masterLevelStatistics:[],
+    statsRefresh:false
   }
   render() {
     let {apprenticeLevelStatistics, adeptLevelStatistics, masterLevelStatistics} = this.state;
@@ -16,29 +17,49 @@ class App extends Component {
       <Router>
         <PageRouter 
         updateQuizStatistics={this.updateQuizStatistics} 
-        apprenticeLevelStatistics={this.state.apprenticeLevelStatistics}
+        apprenticeLevelStatistics={apprenticeLevelStatistics}
         adeptLevelStatistics={adeptLevelStatistics}
-        masterLevelStatistics={masterLevelStatistics}/>
+        masterLevelStatistics={masterLevelStatistics}
+        triggerStatsRefresh={this.triggerStatsRefresh}/>
       </Router>
   );
   }
 
+  
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.state.apprenticeLevelStatistics.length !==nextState.apprenticeLevelStatistics.length) {
+    if(this.state.apprenticeLevelStatistics.length !==nextState.apprenticeLevelStatistics.length ||
+      this.state.adeptLevelStatistics.length !==nextState.adeptLevelStatistics.length || 
+      this.state.masterLevelStatistics.length !==nextState.masterLevelStatistics.length) {
          return false;
     }
     return true;
-}
+  }
 
   updateQuizStatistics = (accuracy, correctAnswers, quizType) => {
     switch(quizType) {
       case Constants.level1Description:
         let apprenticeLevelStatistics = [...this.state.apprenticeLevelStatistics];
         apprenticeLevelStatistics.push({attempt: apprenticeLevelStatistics.length+1, accuracy, correctAnswers});
-        this.setState({apprenticeLevelStatistics});
+        this.setState({apprenticeLevelStatistics, statsRefresh:false});
+        break;
+      case Constants.level2Description:
+        let adeptLevelStatistics = [...this.state.adeptLevelStatistics];
+        adeptLevelStatistics.push({attempt: adeptLevelStatistics.length+1, accuracy, correctAnswers});
+        this.setState({adeptLevelStatistics, statsRefresh:false});
+        break;
+      case Constants.level3Description:
+        let masterLevelStatistics = [...this.state.masterLevelStatistics];
+        masterLevelStatistics.push({attempt: masterLevelStatistics.length+1, accuracy, correctAnswers});
+        this.setState({masterLevelStatistics, statsRefresh:false});
         break;
       default:
         break;
+    }
+  }
+
+  triggerStatsRefresh = () => {
+    if(!this.state.statsRefresh) {
+      this.setState({statsRefresh:!this.state.statsRefresh});
     }
   }
 }

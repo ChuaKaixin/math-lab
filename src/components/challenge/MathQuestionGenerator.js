@@ -54,15 +54,24 @@ function determineAnswerFactorBaseOnQuizType(quizType) {
 }
 
 function generateAnswerList(correctAns, quizType) {
-    let correctAnswerPosition = Math.floor(Math.random() * 3) 
+    let correctAnswerPosition = Math.floor(Math.random() * 4) 
     let answerArray = []
     for(let i = 0; i<=3; i++) {
         if(i===correctAnswerPosition) {
             answerArray.push(correctAns);
         } else {
-            answerArray.push(randomAnswerGenerator(correctAns, quizType));
+            let isUnique = false;
+            let randomAns = 0;
+            do {
+                randomAns = randomAnswerGenerator(correctAns, quizType);
+                isUnique = (!answerArray.includes(randomAns)) && randomAns!==correctAns;
+                if(isUnique) {
+                    answerArray.push(randomAns);
+                }
+            } while(!isUnique);
         }
     }
+    console.log({answerArray, correctAnswerPosition});
     return {answerArray, correctAnswerPosition};
 }
 
@@ -71,11 +80,12 @@ function randomAnswerGenerator(correctAns, quizType) {
     let factor = determineAnswerFactorBaseOnQuizType(quizType);
     switch(randomizer) {
         case 0:
-            return correctAns - (Math.floor(Math.random() * factor)+1);
+            return correctAns - (Math.floor(Math.random() * factor)-1);
         case 1:
             return correctAns + (Math.floor(Math.random() * factor)+1);
         case 2:
-            return correctAns * (Math.floor(Math.random() * 4)+1);
+            let mFactor = Math.floor(Math.random() * 4) + 1;
+            return correctAns * (mFactor===1?2:mFactor);
         default:
             break;
     }

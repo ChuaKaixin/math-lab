@@ -6,7 +6,7 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 
 const Layout = ({component: Component, path, ...rest}) => {
     return (
-        <Route path render={matchProps => (
+        <Route exact path={path} render={matchProps => (
             <div>
               <div className="topBar">
                 <OverlayTrigger placement="right" overlay={tooltip}>

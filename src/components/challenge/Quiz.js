@@ -10,7 +10,7 @@ class Quiz extends Component {
         super(props);
         this.state= {
             correctAnswers: 0,
-            wrongAnswers: 0,
+            wrongAnswers: 0
         }
         this.timeAllowedInSeconds = 10;
     }
@@ -75,7 +75,8 @@ class Quiz extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.correctAnswers !==nextState.correctAnswers || this.state.wrongAnswers !== nextState.wrongAnswers ) {
+        if(this.state.correctAnswers !==nextState.correctAnswers || this.state.wrongAnswers !== nextState.wrongAnswers 
+            || nextState.quizCompleted) {
              return false;
         }
         return true;

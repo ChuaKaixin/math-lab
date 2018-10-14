@@ -12,13 +12,13 @@ const PageRouter = (props) => {
     return (
         <Switch>
           <Route path='/' exact component={MainMenu}/>
-          <Layout path={`/quiz/${Constants.level1subURL}`} quizType={Constants.level1Description} component={Challenge}/>
-          <Layout path={`/quiz/${Constants.level2subURL}`} quizType={Constants.level2Description} component={Challenge}/>
-          <Layout path={`/quiz/${Constants.level3subURL}`} quizType={Constants.level3Description} component={Challenge}/>
+          <Layout path={`/quiz/${Constants.level1subURL}`} quizType={Constants.level1Description} quizURL={Constants.level1subURL} component={Challenge}/>
+          <Layout path={`/quiz/${Constants.level2subURL}`} quizType={Constants.level2Description} quizURL={Constants.level2subURL} component={Challenge}/>
+          <Layout path={`/quiz/${Constants.level3subURL}`} quizType={Constants.level3Description} quizURL={Constants.level3subURL} component={Challenge}/>
           <Layout path={`/quiz/questions/${Constants.level1subURL}`} quizType={Constants.level1Description} updateQuizStatistics={props.updateQuizStatistics} quizStats={props.apprenticeLevelStatistics} component={Quiz}/>
           <Layout path={`/quiz/questions/${Constants.level2subURL}`} quizType={Constants.level2Description} updateQuizStatistics={props.updateQuizStatistics} quizStats={props.adeptLevelStatistics} component={Quiz}/>
           <Layout path={`/quiz/questions/${Constants.level3subURL}`} quizType={Constants.level3Description} updateQuizStatistics={props.updateQuizStatistics} quizStats={props.masterLevelStatistics} component={Quiz}/>
-          <Layout path='/statistics' quizStats = {getStatistics(props)} component={Statistics}/>
+          <Layout path='/statistics' triggerStatsRefresh={props.triggerStatsRefresh} quizStats = {getStatistics(props)} component={Statistics}/>
         </Switch>
     );
 }

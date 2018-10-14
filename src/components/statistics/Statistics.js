@@ -4,9 +4,15 @@ import Constants from '../utilities/Constants';
 import ResultsPlot from './ResultsPlot';
 
 class Statistics extends Component {
+
     state = {
         statisticsToDisplay : 'Summary'
     }
+    
+    componentDidMount = () => {
+        this.props.triggerStatsRefresh();
+    }
+
     render() {
          return (
             <div className="quizBody">

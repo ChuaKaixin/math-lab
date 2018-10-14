@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {Label, Well, PageHeader, Image, Button} from 'react-bootstrap';
+import {Label, Well, PageHeader, Image, Button, Alert} from 'react-bootstrap';
 import ChallengeCompletedImg from '../../images/ChallengeCompletedImg.png';
 import ResultsPlot from '../statistics/ResultsPlot';
-const Result = (props) => {
-    let {correctAnswers, wrongAnswers, quizType, updateQuizStatistics} = props;
-    let accuracy = correctAnswers + wrongAnswers === 0? 0: (Math.round(correctAnswers/(correctAnswers + wrongAnswers)*100)*100)/100;
-    updateQuizStatistics(accuracy, correctAnswers, quizType);
-    return (
-        <div>
+class Results extends Component {
+    state = {
+        showAlert: false
+    }
+    render() {
+        let {correctAnswers, wrongAnswers, quizType, updateQuizStatistics, quizStats} = this.props;
+        let accuracy = correctAnswers + wrongAnswers === 0? 0: (Math.round(correctAnswers/(correctAnswers + wrongAnswers)*100)*100)/100;
+        let {showAlert} = this.state;
+
+        return (
+            <div>
             <div className="results">
                 <div>
                     <Image src={ChallengeCompletedImg} responsive/>
@@ -22,16 +27,29 @@ const Result = (props) => {
             <Well>
                     <p>Accuracy: {accuracy}%</p>
                     <h2><Label bsStyle='success'>{correctAnswers} Correct</Label> <Label bsStyle='danger'>{wrongAnswers} Wrong</Label></h2>
-                    <ResultsPlot previousResults={[]} latestResult={{attempt: 'Latest', accuracy, correctAnswers}}/>
-                    <Button bsStyle="primary" bsSize="large">
-                        <Link style={{ textDecoration: 'none' }} to='/'><span className="challengeLinkText">Main Menu</span></Link>
-                    </Button>
+                    <ResultsPlot previousResults={quizStats} latestResult={{attempt: 'Latest', accuracy, correctAnswers}}/>
+                    {!showAlert && 
+                        <Button bsStyle="primary" bsSize="large" onClick={() => {
+                            this.setState({showAlert:true});
+                            updateQuizStatistics(accuracy, correctAnswers, quizType);
+                            }}>
+                            <span className="challengeLinkText">Record Results</span>
+                        </Button>}
+                    {showAlert &&
+                        <Alert bsStyle="warning">
+                        Thank you for playing! <Link style={{ textDecoration: 'none' }} to='/'>Back to menu</Link>
+                        </Alert>
+                    }
             </Well>
+            
         </div>
+        );
+    }
 
-    );
+    recordResults = (accuracy, correctAnswers, quizType, updateQuizStatistics) => {
+        updateQuizStatistics(accuracy, correctAnswers, quizType);
+    }
+    
 }
 
-export default Result;
-
-
+export default Results;
