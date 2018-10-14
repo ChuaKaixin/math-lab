@@ -12,7 +12,7 @@ class Quiz extends Component {
             correctAnswers: 0,
             wrongAnswers: 0
         }
-        this.timeAllowedInSeconds = 10;
+        this.timeAllowedInSeconds = 60;
     }
 
     render() {
