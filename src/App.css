@@ -150,3 +150,96 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+.loginBackground {
+  box-sizing: border-box;
+  position: relative;
+  margin-top:3%;
+  margin-left: auto;
+  margin-right:auto; 
+  height: 90%;
+  width: 70%;
+  background: linear-gradient(205deg, #FFFACD 25%, #8B4513 35%,#8FBC8F 30%);
+  border-radius: 5px;
+  padding: 5%;
+}
+
+.loginForm {
+  box-sizing: border-box;
+  position: relative;
+  margin-top:3%;
+  margin-left: auto;
+  margin-right:auto; 
+  height: 90%;
+  width: 50%;
+  background-color: white;
+  opacity: 0.7;
+  border-radius: 5px;
+}
+
+.loginMenu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.passwordMenu {
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.highlightTab {
+  background: #696969;
+  color: white;
+  padding: 5%;
+  pointer-events: none; 
+}
+
+.normalTab {
+  padding: 5%;
+}
+
+.normalTab:hover {
+  padding: 5%;
+  cursor: pointer;
+  background: #DCDCDC;
+}
+
+.loginInputFields {
+  text-align: center;
+  margin-top:3%;
+  margin-left: auto;
+  margin-right:auto; 
+  padding: 10%;
+}
+.loginInput {
+  text-align: center;
+  margin: 5%;
+  width: 90%;
+  padding: 5%;
+  border: 3px solid  #696969;
+  border-radius: 20px;
+  outline: none;
+}
+
+.alertWords {
+  text-align: center;
+  color: red;
+  margin-top: 2%;
+}
+
+.registerSuccessWords {
+  text-align: center;
+  color: green;
+  margin-top: 2%;
+}
+
+.spacerWords {
+  margin-top: 2%;
+  color:white;
+}
+
+.logoutButtonsSpacer {
+  margin: 2%;
+}

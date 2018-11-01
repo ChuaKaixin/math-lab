@@ -10,11 +10,14 @@ class Questions extends Component {
         question: generateQuestion(this.props.quizType),
         questionAnswered: false,
         chosenAnswerIndex: 0
-    }
+    } 
     render() {
         let {questionAnswered, chosenAnswerIndex} = this.state;
         let {num1, num2, operation, answer} = this.state.question;
         let {correctAnswerPosition} = answer;
+        const listStyle = {
+            outline: 'none'
+        }
         return (
             <div>
                 <form>
@@ -31,10 +34,12 @@ class Questions extends Component {
                         <div className="answerGrid">
                             <ListGroup>
                                 {answer.answerArray.map((item, index) => 
-                                <ListGroupItem bsStyle={this.getAnswerDisplay(index, correctAnswerPosition)} key={index}>
-                                    <span onClick={(event)=> this.updateResults(index, event)}>
+                                <ListGroupItem 
+                                style= {listStyle}
+                                onClick={(event)=> this.updateResults(index, event)} 
+                                bsStyle={this.getAnswerDisplay(index, correctAnswerPosition)} 
+                                key={index}>
                                     {questionAnswered&&index===chosenAnswerIndex?'*':''}{item}
-                                    </span>
                                 </ListGroupItem>)}
                             </ListGroup>
                         </div>
@@ -43,6 +48,13 @@ class Questions extends Component {
                 </form>
             </div>
         );
+    }
+
+    disableEnableAnswer = () => {
+        if(this.state.questionAnswered) {
+            return "pointer-events:none;"
+        } else
+            return "";
     }
 
     showNextQuestion = (event) => {
@@ -78,6 +90,7 @@ class Questions extends Component {
             return "warning";
         }
     }
+
 }
 
 export default Questions;

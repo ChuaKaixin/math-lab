@@ -8,7 +8,9 @@ const  CONSTANTS = {
     progressBarWarning: "warning",
     progressBarInfo: "info",
     progressBarDanger: "danger",
-    statisticsDefaultDisplay: "Summary"
+    statisticsDefaultDisplay: "Summary",
+    userMenuChangePassword: "changePwd",
+    userMenuLogout: "logout"
 }
 
 export default CONSTANTS;

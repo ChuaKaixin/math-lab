@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import PageRouter from './components/utilities/PageRouter';
 import Constants from './components/utilities/Constants';
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom';
+import { AuthProvider } from './components/context/AuthContext';
 
 class App extends Component {
   state = {
@@ -14,14 +15,16 @@ class App extends Component {
   render() {
     let {apprenticeLevelStatistics, adeptLevelStatistics, masterLevelStatistics} = this.state;
     return (
-      <Router>
-        <PageRouter 
-        updateQuizStatistics={this.updateQuizStatistics} 
-        apprenticeLevelStatistics={apprenticeLevelStatistics}
-        adeptLevelStatistics={adeptLevelStatistics}
-        masterLevelStatistics={masterLevelStatistics}
-        triggerStatsRefresh={this.triggerStatsRefresh}/>
-      </Router>
+      <AuthProvider>
+          <Router>
+            <PageRouter 
+            updateQuizStatistics={this.updateQuizStatistics} 
+            apprenticeLevelStatistics={apprenticeLevelStatistics}
+            adeptLevelStatistics={adeptLevelStatistics}
+            masterLevelStatistics={masterLevelStatistics}
+            triggerStatsRefresh={this.triggerStatsRefresh}/>
+          </Router>
+      </AuthProvider>
   );
   }
 

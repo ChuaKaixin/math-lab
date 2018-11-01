@@ -2,8 +2,10 @@ import React from 'react';
 import MainMenu from '../mainmenu/MainMenu';
 import Challenge from '../challenge/Challenge';
 import Quiz from '../challenge/Quiz';
+import Login from '../user/Login';
+import PasswordChange from '../user/PasswordChange';
 import Statistics from '../statistics/Statistics';
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch,} from 'react-router-dom'
 import Layout from "../utilities/Layout";
 import Constants from './Constants';
 
@@ -19,6 +21,8 @@ const PageRouter = (props) => {
           <Layout path={`/quiz/questions/${Constants.level2subURL}`} quizType={Constants.level2Description} updateQuizStatistics={props.updateQuizStatistics} quizStats={props.adeptLevelStatistics} component={Quiz}/>
           <Layout path={`/quiz/questions/${Constants.level3subURL}`} quizType={Constants.level3Description} updateQuizStatistics={props.updateQuizStatistics} quizStats={props.masterLevelStatistics} component={Quiz}/>
           <Layout path='/statistics' triggerStatsRefresh={props.triggerStatsRefresh} quizStats = {getStatistics(props)} component={Statistics}/>
+          <Layout path='/login' component={Login}/>
+          <Layout path='/passwordChange' component={PasswordChange}/>
         </Switch>
     );
 }
