@@ -2,28 +2,36 @@ import React, { Component } from 'react';
 import {Nav, NavItem, Table, Panel} from 'react-bootstrap';
 import Constants from '../utilities/Constants';
 import ResultsPlot from './ResultsPlot';
+import {getResults} from '../challenge/ResultHandler';
 
 class Statistics extends Component {
 
     state = {
-        statisticsToDisplay : 'Summary'
+        statisticsToDisplay : 'Summary',
+        results : null
     }
-    
-    componentDidMount = () => {
+
+    async componentDidMount() {
         this.props.triggerStatsRefresh();
+        const results =await getResults();
+        if(results) {
+            this.setState({results : results});
+        }
     }
 
     render() {
          return (
             <div className="quizBody">
+            {this.state.results !== null && 
+            <div>
                 <Nav bsStyle="tabs" activeKey={this.state.statisticsToDisplay} onSelect={(k, event) => this.handleSelect(k, event)}>
                     <NavItem eventKey="Summary">
                         Summary
                     </NavItem>
-                    {Object.keys(this.props.quizStats).map(key => (<NavItem key={key} eventKey={key}>{key}</NavItem>))}
+                    {Object.keys(this.state.results).map(key => (<NavItem key={key} eventKey={key}>{key}</NavItem>))}
                 </Nav>
                 {this.state.statisticsToDisplay!==Constants.statisticsDefaultDisplay && 
-                    <ResultsPlot previousResults={this.props.quizStats[this.state.statisticsToDisplay]}/>
+                    <ResultsPlot previousResults={this.state.results[this.state.statisticsToDisplay].progress}/>
                 }
                 {this.state.statisticsToDisplay===Constants.statisticsDefaultDisplay && 
                     <Panel>
@@ -37,12 +45,13 @@ class Statistics extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Object.keys(this.props.quizStats).map(key => (<tr key={key}><td>{key}</td><td>{this.props.quizStats[key].length}</td></tr>))}
+                                    {Object.keys(this.state.results).map(key => (<tr key={key}><td>{key}</td><td>{this.state.results[key].progress.length}</td></tr>))}
                                 </tbody>
                             </Table>
                         </Panel.Body>
                     </Panel>
                 }
+            </div> }
             </div>
         );
     }
@@ -51,6 +60,8 @@ class Statistics extends Component {
         event.preventDefault();
         this.setState({statisticsToDisplay: eventKey});
       }
+
+    
 }
 
 export default Statistics;

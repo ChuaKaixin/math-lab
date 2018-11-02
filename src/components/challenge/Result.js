@@ -3,14 +3,24 @@ import {Link} from 'react-router-dom';
 import {Label, Well, PageHeader, Image, Button, Alert} from 'react-bootstrap';
 import ChallengeCompletedImg from '../../images/ChallengeCompletedImg.png';
 import ResultsPlot from '../statistics/ResultsPlot';
+import {commitResults, getResultsBaseOnLevel} from './ResultHandler';
 class Results extends Component {
     state = {
-        showAlert: false
+        showAlert: false,
+        previousResults: null
     }
+
+    async componentDidMount() {
+        const results =await getResultsBaseOnLevel(this.props.quizType);
+        if(results) {
+            this.setState({previousResults : results});
+        }
+    }
+
     render() {
-        let {correctAnswers, wrongAnswers, quizType, updateQuizStatistics, quizStats} = this.props;
+        let {correctAnswers, wrongAnswers, quizType, updateQuizStatistics} = this.props;
         let accuracy = correctAnswers + wrongAnswers === 0? 0: (Math.round(correctAnswers/(correctAnswers + wrongAnswers)*100)*100)/100;
-        let {showAlert} = this.state;
+        let {showAlert,previousResults} = this.state;
 
         return (
             <div>
@@ -27,11 +37,11 @@ class Results extends Component {
             <Well>
                     <p>Accuracy: {accuracy}%</p>
                     <h2><Label bsStyle='success'>{correctAnswers} Correct</Label> <Label bsStyle='danger'>{wrongAnswers} Wrong</Label></h2>
-                    <ResultsPlot previousResults={quizStats} latestResult={{attempt: 'Latest', accuracy, correctAnswers}}/>
+                    <ResultsPlot previousResults={previousResults} latestResult={{attemptId: 'Latest', accuracy, score: correctAnswers}}/>
                     {!showAlert && 
                         <Button bsStyle="primary" bsSize="large" onClick={() => {
                             this.setState({showAlert:true});
-                            updateQuizStatistics(accuracy, correctAnswers, quizType);
+                            this.recordResults(accuracy, correctAnswers, quizType, updateQuizStatistics);
                             }}>
                             <span className="challengeLinkText">Record Results</span>
                         </Button>}
@@ -48,6 +58,7 @@ class Results extends Component {
 
     recordResults = (accuracy, correctAnswers, quizType, updateQuizStatistics) => {
         updateQuizStatistics(accuracy, correctAnswers, quizType);
+        commitResults(quizType, correctAnswers);
     }
     
 }

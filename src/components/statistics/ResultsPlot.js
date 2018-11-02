@@ -3,7 +3,10 @@ import {Well} from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
 const ResultsPlot = ({previousResults, latestResult}) => {
-    let manipulatedResults = [...previousResults];
+    let manipulatedResults = [];
+    if(previousResults && previousResults.length>0) {
+        manipulatedResults = [...previousResults];
+    }
     if(latestResult) {
         manipulatedResults.push(latestResult);
     }
@@ -14,13 +17,13 @@ const ResultsPlot = ({previousResults, latestResult}) => {
         <ResponsiveContainer width="100%" height="100%">
             <BarChart data={manipulatedResults}>
                 <CartesianGrid strokeDasharray="5 5" />
-                <XAxis dataKey="attempt" />
+                <XAxis dataKey="attemptId" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="correctAnswers">
+                <Bar dataKey="score">
                 {manipulatedResults.map((entry, index) => (
-                    <Cell key={index} fill={entry.attempt === "Latest" ? '#DAA520' : '#20B2AA' }/>
+                    <Cell key={index} fill={entry.attemptId === "Latest" ? '#DAA520' : '#20B2AA' }/>
                 ))}
                 </Bar>
             </BarChart>
