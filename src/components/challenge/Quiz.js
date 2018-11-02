@@ -27,7 +27,7 @@ class Quiz extends Component {
     CompletionDisplay = () => {
         return (
             <div className="quizBody">
-                <Result quizType={this.props.quizType} quizStats={this.props.quizStats} updateQuizStatistics={this.props.updateQuizStatistics} correctAnswers={this.state.correctAnswers} wrongAnswers={this.state.wrongAnswers}/>
+                <Result quizType={this.props.quizType} correctAnswers={this.state.correctAnswers} wrongAnswers={this.state.wrongAnswers}/>
             </div>
         )
     ;}
@@ -50,7 +50,7 @@ class Quiz extends Component {
                         <ProgressBar active striped bsStyle={this.getProgressBarStyleAccordingToTimeLeft(seconds)} min={0} max={this.timeAllowedInSeconds} now={parseInt(seconds, 10)}/>
 
                     </span>
-                    <Questions quizType={this.props.quizType} goBackToMainMenu={this.props.goBackToMainMenu} updateQuizResults={this.updateQuizResults}/>
+                    <Questions quizType={this.props.quizType} updateQuizResults={this.updateQuizResults}/>
                 </div>;
         }
         };

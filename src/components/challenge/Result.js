@@ -18,7 +18,7 @@ class Results extends Component {
     }
 
     render() {
-        let {correctAnswers, wrongAnswers, quizType, updateQuizStatistics} = this.props;
+        let {correctAnswers, wrongAnswers, quizType} = this.props;
         let accuracy = correctAnswers + wrongAnswers === 0? 0: (Math.round(correctAnswers/(correctAnswers + wrongAnswers)*100)*100)/100;
         let {showAlert,previousResults} = this.state;
 
@@ -41,7 +41,7 @@ class Results extends Component {
                     {!showAlert && 
                         <Button bsStyle="primary" bsSize="large" onClick={() => {
                             this.setState({showAlert:true});
-                            this.recordResults(accuracy, correctAnswers, quizType, updateQuizStatistics);
+                            this.recordResults(accuracy, correctAnswers, quizType);
                             }}>
                             <span className="challengeLinkText">Record Results</span>
                         </Button>}
@@ -56,8 +56,7 @@ class Results extends Component {
         );
     }
 
-    recordResults = (accuracy, correctAnswers, quizType, updateQuizStatistics) => {
-        updateQuizStatistics(accuracy, correctAnswers, quizType);
+    recordResults = (accuracy, correctAnswers, quizType) => {
         commitResults(quizType, correctAnswers);
     }
     

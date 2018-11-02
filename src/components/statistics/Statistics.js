@@ -12,7 +12,6 @@ class Statistics extends Component {
     }
 
     async componentDidMount() {
-        this.props.triggerStatsRefresh();
         const results =await getResults();
         if(results) {
             this.setState({results : results});
