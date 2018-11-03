@@ -10,7 +10,7 @@ class Statistics extends Component {
 
     state = {
         statisticsToDisplay : 'Summary',
-        results : null,
+        results : {},
         scoreBoard : {}
     }
 
@@ -25,7 +25,7 @@ class Statistics extends Component {
     render() {
          return (
             <div className="quizBody">
-            {this.state.results !== null && 
+            {this.state.results !== {} && 
             <div>
                 <Nav bsStyle="tabs" activeKey={this.state.statisticsToDisplay} onSelect={(k, event) => this.handleSelect(k, event)}>
                     <NavItem eventKey="Summary">
@@ -87,7 +87,7 @@ class Statistics extends Component {
                     </Panel>
                 }
             </div> }
-            {this.state.results === null &&
+            {this.state.results === {} &&
                 <Panel>
                 <Panel.Heading>Summary</Panel.Heading>
                 <Panel.Body>
