@@ -243,3 +243,14 @@ html, body {
 .logoutButtonsSpacer {
   margin: 2%;
 }
+
+.statistics {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+}
+
+.statsImg {
+  width:100%;
+  height: auto;
+  vertical-align: middle;
+}

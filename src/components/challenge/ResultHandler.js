@@ -38,21 +38,36 @@ async function getResults() {
 
 async function getResultsBaseOnLevel(quizLevel) {
     try {
-        const results = await axios.get(process.env.REACT_APP_API_URL + "/api/result", 
-        {
-            withCredentials: true,
-            validateStatus: validateStatus
-        });
-        if(results.data.results[quizLevel].progress) {
-            return results.data.results[quizLevel].progress;
+        const allResults = await getResults();
+        if(allResults[quizLevel].progress) {
+            return allResults[quizLevel].progress;
         } else return [];
-
     } catch (error) {
         return {status: "error"};
     }
 }
 
+async function getScoreBoard() {
+    try {
+        const results = await axios.get(process.env.REACT_APP_API_URL + "/api/score_board", 
+        {
+            withCredentials: true,
+            validateStatus: validateStatus
+        });
+        let returnResults = {}
+        if(results.data) {
+            for(let score of results.data) {
+                returnResults[score.level] = score.scoreList;
+            }
+        } 
+        return returnResults;
+    } catch (error) {
+        return {status: "error"}
+    }
+}
+
+
 function validateStatus(status) {
     return true;
 }
-export {commitResults, getResults, getResultsBaseOnLevel}
+export {commitResults, getResults, getResultsBaseOnLevel, getScoreBoard}
