@@ -87,6 +87,14 @@ class Statistics extends Component {
                     </Panel>
                 }
             </div> }
+            {this.state.results === null &&
+                <Panel>
+                <Panel.Heading>Summary</Panel.Heading>
+                <Panel.Body>
+                   <p>No results</p>
+               </Panel.Body>
+           </Panel>
+            }
             </div>
         );
     }
