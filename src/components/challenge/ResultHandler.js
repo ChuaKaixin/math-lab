@@ -1,4 +1,5 @@
 const axios = require('axios')
+axios.defaults.withCredentials = true;
 
 async function commitResults(quizType, correctAnswers) {
     try {
@@ -8,7 +9,6 @@ async function commitResults(quizType, correctAnswers) {
           };
         const commitStatus = await axios.put(process.env.REACT_APP_API_URL + "/api/result/update_results", results, 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         if(commitStatus.progress) {
@@ -24,7 +24,6 @@ async function getResults() {
     try {
         const results = await axios.get(process.env.REACT_APP_API_URL + "/api/result", 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         if(results.data.results) {
@@ -51,7 +50,6 @@ async function getScoreBoard() {
     try {
         const results = await axios.get(process.env.REACT_APP_API_URL + "/api/score_board", 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         let returnResults = {}

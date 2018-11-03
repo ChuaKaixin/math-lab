@@ -1,10 +1,10 @@
 const axios = require('axios')
+axios.defaults.withCredentials = true;
 
 async function login(username, password) {
     try {
         const loginStatus = await axios.post(process.env.REACT_APP_API_URL + "/api/user/login", {user:{username, password}}, 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         if(loginStatus.data.user) {
@@ -21,7 +21,6 @@ async function signup(username, password) {
     try {
         const signupStatus = await axios.post(process.env.REACT_APP_API_URL + "/api/user/signup", {user:{username, password}}, 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         if(signupStatus.data.user) {
@@ -38,7 +37,6 @@ async function changePassword(password) {
     try {
         const passwordStatus = await axios.put(process.env.REACT_APP_API_URL + "/api/user/change_password", {user:{password}}, 
         {
-            withCredentials: true,
             validateStatus: validateStatus
         });
         if(passwordStatus.status) {
