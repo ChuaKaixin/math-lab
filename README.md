@@ -6,6 +6,8 @@ Math Arithmetic Skills training application using reactJS. See [live site](https
 
 * Generate random arithmetic questions to be answered within 1 min presented in 3 level of difficulty
 * Charts results for visualization of results
+* User management: registration, login, logout, change password
+* Top scores board
 
 ## Installing
 
