@@ -23,9 +23,10 @@ class Statistics extends Component {
     }
 
     render() {
+        console.log(`results is ${this.state.results}`);
          return (
             <div className="quizBody">
-            {this.state.results !== {} && 
+            {(this.state.results && this.state.results !== {}) && 
             <div>
                 <Nav bsStyle="tabs" activeKey={this.state.statisticsToDisplay} onSelect={(k, event) => this.handleSelect(k, event)}>
                     <NavItem eventKey="Summary">
@@ -87,7 +88,7 @@ class Statistics extends Component {
                     </Panel>
                 }
             </div> }
-            {this.state.results === {} &&
+            {(!this.state.results || this.state.results === {}) &&
                 <Panel>
                 <Panel.Heading>Summary</Panel.Heading>
                 <Panel.Body>
