@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Label, Well, PageHeader, Image, Button, Alert} from 'react-bootstrap';
 import ChallengeCompletedImg from '../../images/ChallengeCompletedImg.png';
+import InProgressImg from '../../images/inprogress.gif';
 import ResultsPlot from '../statistics/ResultsPlot';
 import {commitResults, getResultsBaseOnLevel} from './ResultHandler';
 class Results extends Component {
@@ -34,7 +35,7 @@ class Results extends Component {
                     </PageHeader>
                 </div>
             </div>
-            <Well>
+            {this.state.previousResults!==null && <Well>
                     <p>Accuracy: {accuracy}%</p>
                     <h2><Label bsStyle='success'>{correctAnswers} Correct</Label> <Label bsStyle='danger'>{wrongAnswers} Wrong</Label></h2>
                     <ResultsPlot previousResults={previousResults} latestResult={{attemptId: 'Latest', accuracy, score: correctAnswers}}/>
@@ -50,7 +51,12 @@ class Results extends Component {
                         Thank you for playing! <Link style={{ textDecoration: 'none' }} to='/'>Back to menu</Link>
                         </Alert>
                     }
-            </Well>
+            </Well>}
+            {this.state.previousResults===null && 
+            <div class="quizBody">
+                <Image src={InProgressImg} responsive/>
+            </div>
+            }
             
         </div>
         );

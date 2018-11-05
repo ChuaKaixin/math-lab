@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import {Nav, NavItem, Table, Panel, PageHeader} from 'react-bootstrap';
+import {Nav, NavItem, Table, Panel, PageHeader, Image} from 'react-bootstrap';
 import Constants from '../utilities/Constants';
 import ResultsPlot from './ResultsPlot';
 import {getResults, getScoreBoard} from '../challenge/ResultHandler';
 import ScoreImg from '../../images/score.png';
 import ScoreBoardImg from '../../images/scoreboard.png';
+import InProgressImg from '../../images/inprogress.gif';
 
 class Statistics extends Component {
 
     state = {
         statisticsToDisplay : 'Summary',
-        results : {},
-        scoreBoard : {}
+        results : null,
+        scoreBoard : null
     }
 
     async componentDidMount() {
@@ -88,13 +89,10 @@ class Statistics extends Component {
                     </Panel>
                 }
             </div> }
-            {(!this.state.results || this.state.results === {}) &&
-                <Panel>
-                <Panel.Heading>Summary</Panel.Heading>
-                <Panel.Body>
-                   <p>No results</p>
-               </Panel.Body>
-           </Panel>
+            {this.state.results === null &&
+                 <div class="quizBody">
+                 <Image src={InProgressImg} responsive/>
+                </div>
             }
             </div>
         );
