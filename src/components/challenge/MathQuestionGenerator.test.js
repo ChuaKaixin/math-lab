@@ -36,20 +36,22 @@ it("should generate a subtraction question with correct answer and 3 other rando
     .mockReturnValueOnce(0.2)   //num2
     .mockReturnValueOnce(0.4)   //correct answer position
     .mockReturnValueOnce(0.1)   //random answer index 1 - use subtraction
-    .mockReturnValueOnce(0.5)   //random answer index 1 - Floor(0.5*5) - 1 = 1 [random answer is -1-1=-2]
+    .mockReturnValueOnce(0.5)   //random answer index 1 - Floor(0.5*7) - 1 = 2[random answer is -2-2=-4]
     .mockReturnValueOnce(0.4)   //random answer index 2 - use addition
-    .mockReturnValueOnce(0.5)   //random answer index 2 - Floor(0.5*5) + 1 = 3 [random answer is -1+3=2]
+    .mockReturnValueOnce(0.5)   //random answer index 2 - Floor(0.5*7) + 1 = 4 [random answer is -2+4=2]
     .mockReturnValueOnce(0.7)   //random answer index 3 - use multiplication
-    .mockReturnValueOnce(0.5)   //random answer index 3 - Floor(0.5*4) + 1 = 3 [random answer is -1*3=-3]
-    let randomQuestion = generateQuestion(Constants.level1Description);
+    .mockReturnValueOnce(0.5)   //random answer index 3 - Floor(0.5*4) + 1 = 3 [random answer is -2*3=-6]
+    let randomQuestion = generateQuestion(Constants.level2Description);
     expect(randomQuestion.operation).toEqual('-'); //add operation
-    expect(randomQuestion.num1).toEqual(2); //num1 = (Floor(0.1 * 10) + 1) = 2
-    expect(randomQuestion.num2).toEqual(3); //num2 = (Floor(0.2 * 10) + 1) = 3
+    
+    expect(randomQuestion.num1).toEqual(3); //num1 = (Floor(0.1 * 20) + 1) = 3
+    expect(randomQuestion.num2).toEqual(5); //num2 = (Floor(0.2 * 20) + 1) = 5
     expect(randomQuestion.answer.correctAnswerPosition).toEqual(1); //num2 = (Floor(0.4 * 4)) = 1
-    expect(randomQuestion.answer.answerArray[1]).toEqual(-1);    //correct answer is at position 1
-    expect(randomQuestion.answer.answerArray[0]).toEqual(-2);    //index 0 random answer = -2
+    expect(randomQuestion.answer.answerArray[1]).toEqual(-2);    //correct answer is at position 1
+    expect(randomQuestion.answer.answerArray[0]).toEqual(-4);    //index 0 random answer = -2
     expect(randomQuestion.answer.answerArray[2]).toEqual(2);    //index 2 random answer = 2
-    expect(randomQuestion.answer.answerArray[3]).toEqual(-3);   //index 3 random answer = -3
+    expect(randomQuestion.answer.answerArray[3]).toEqual(-6);   //index 3 random answer = -3
+    
 })
 
 it("should generate a multiplication question with correct answer and 3 other random answers", () => {

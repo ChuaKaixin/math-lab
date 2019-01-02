@@ -5,24 +5,31 @@ export default function generateQuestion (quizType){
     let operation = Math.floor(Math.random() * 4) ;
     let factor = determineQuestionFactorBaseOnQuizType(quizType);
     let correctAns = 0;
-    let num1 = Math.floor(Math.random() * factor) + 1 ;
-    let num2 = Math.floor(Math.random() * factor) + 1 ;
-    switch(operation) {
-        case 0:
-            correctAns = num1 + num2;
-            break;
-        case 1:
-            correctAns = num1 - num2;
-            break;
-        case 2: 
-            correctAns = num1 * num2;
-            break;
-        case 3:
-            correctAns = num1;
-            num1 = num1*num2;
-            break;
-        default:
-            correctAns = 0;
+    let validQuestion = false;
+    let num1, num2;
+    while(!validQuestion) {
+        num1 = Math.floor(Math.random() * factor) + 1 ;
+        num2 = Math.floor(Math.random() * factor) + 1 ;
+        switch(operation) {
+            case 0:
+                correctAns = num1 + num2;
+                break;
+            case 1:
+                correctAns = num1 - num2;
+                break;
+            case 2: 
+                correctAns = num1 * num2;
+                break;
+            case 3:
+                correctAns = num1;
+                num1 = num1*num2;
+                break;
+            default:
+                correctAns = 0;
+        }
+        if(quizType!==Constants.level1Description || correctAns >= 0) {
+            validQuestion = true;
+        }
     }
     return {num1, num2, operation: operatorList[operation], answer:generateAnswerList(correctAns, quizType)}
 }
