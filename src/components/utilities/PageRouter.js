@@ -14,6 +14,7 @@ const PageRouter = (props) => {
     return (
         <Switch>
           <Route path='/' exact component={MainMenu}/>
+          <Layout path={`/quiz/${Constants.practicesubURL}`} quizType={Constants.practiceDescription} quizURL={Constants.practicesubURL} component={Challenge}/>
           <Layout path={`/quiz/${Constants.level1subURL}`} quizType={Constants.level1Description} quizURL={Constants.level1subURL} component={Challenge}/>
           <Layout path={`/quiz/${Constants.level2subURL}`} quizType={Constants.level2Description} quizURL={Constants.level2subURL} component={Challenge}/>
           <Layout path={`/quiz/${Constants.level3subURL}`} quizType={Constants.level3Description} quizURL={Constants.level3subURL} component={Challenge}/>

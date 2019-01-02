@@ -17,6 +17,7 @@ class MainMenu extends Component {
                         <div>
                         {isAuth ? (
                             <div>
+                                <div className="frontPageLinks"><Link to={`/quiz/${Constants.practicesubURL}`} className="frontPageText">{Constants.practiceDescription}</Link></div>
                                 <div className="frontPageLinks"><Link to={`/quiz/${Constants.level1subURL}`} className="frontPageText">{Constants.level1Description}</Link></div>
                                 <div className="frontPageLinks"><Link to={`/quiz/${Constants.level2subURL}`} className="frontPageText">{Constants.level2Description}</Link></div>
                                 <div className="frontPageLinks"><Link to={`/quiz/${Constants.level3subURL}`} className="frontPageText">{Constants.level3Description}</Link></div>

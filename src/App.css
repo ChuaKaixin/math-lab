@@ -39,10 +39,10 @@ html, body {
 
 .frontPageTitle {
   font-family: 'Pacifico', cursive;
-  font-size: 10em;
+  font-size: 9em;
   color: white;
   text-align: center;
-  padding-top: 18%;
+  padding-top: 16%;
 }
 
 .topBar {  
@@ -60,7 +60,7 @@ html, body {
 
 .frontPage {
   background-image: url('./images/mathlab-front.jpg');
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 850px;
@@ -83,13 +83,13 @@ html, body {
 
 .frontPageLinks {
   text-align: center;
-  margin-top:0.5%;
+  margin-top:0.4%;
   margin-left: auto;
   margin-right:auto; 
-  width: 20%;
-  padding: 10px;
+  width: 15%;
+  padding: 7px;
   background-color: white;
-  border: 3px solid #009900;
+  border: 5px solid #009900;
   border-radius: 35px;
 }
 
