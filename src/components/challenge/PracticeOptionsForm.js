@@ -15,6 +15,7 @@ export default class PracticeOptionsForm extends Component {
     }
   render() {
       let {operatorControl, negativeControl} = this.state;
+      let durationValues = [1,2,3,4,5];
     return (
       <form>
         <h3>Customize your practice..</h3>
@@ -32,8 +33,10 @@ export default class PracticeOptionsForm extends Component {
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Duration</ControlLabel>
           <FormControl inline componentClass="select" placeholder={this.state.timeControl}>
-            <option value={this.state.timeControl}>{this.state.timeControl}</option>
-            <option value="other">...</option>
+            <option value="No limit">No limit</option>
+            {durationValues.map((item, index) => 
+              <option value={item}>{item}</option>
+            )}
           </FormControl>
         </FormGroup>
       </form>
