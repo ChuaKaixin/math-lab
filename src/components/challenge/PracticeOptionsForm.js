@@ -32,10 +32,10 @@ export default class PracticeOptionsForm extends Component {
         </FormGroup>
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Duration</ControlLabel>
-          <FormControl inline componentClass="select" placeholder={this.state.timeControl}>
+          <FormControl onChange={this.handleTimeLimitControl} componentClass="select" placeholder={this.state.timeControl}>
             <option value="No limit">No limit</option>
             {durationValues.map((item, index) => 
-              <option value={item}>{item}</option>
+              <option key={item} value={item}>{item} min</option>
             )}
           </FormControl>
         </FormGroup>
@@ -51,5 +51,9 @@ export default class PracticeOptionsForm extends Component {
 
   handleNegativeControl = () => {
     this.setState({negativeControl:!this.state.negativeControl});
+  }
+
+  handleTimeLimitControl = (selection) => {
+    this.setState({timeControl:selection.target.value})
   }
 }
