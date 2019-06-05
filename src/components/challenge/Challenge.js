@@ -16,9 +16,10 @@ export default class Challenge extends Component {
         {quizType!==Constants.practiceDescription &&
         <p>Challenge: Get as many questions right within 2 min.</p>
         }
+        {quizType!==Constants.practiceDescription &&
         <Button bsStyle="primary" bsSize="large">
             <Link style={{ textDecoration: 'none' }} to={`/quiz/questions/${quizURL}`}><span className="challengeLinkText">Start</span></Link>
-        </Button>
+        </Button>}
         </div>
     )
   }

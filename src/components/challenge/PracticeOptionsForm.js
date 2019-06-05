@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {FormGroup,Checkbox,ControlLabel, FormControl} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import Constants from '../utilities/Constants';
 
 export default class PracticeOptionsForm extends Component {
 
@@ -39,7 +42,20 @@ export default class PracticeOptionsForm extends Component {
             )}
           </FormControl>
         </FormGroup>
+
+        <Button bsStyle="primary" bsSize="large">
+          <Link style={{ textDecoration: 'none' }} 
+          to={{
+            pathname:`/quiz/questions/${Constants.level1subURL}`,
+            state:{
+              operationControl: this.state.operatorControl,
+              timeControl: this.state.timeControl,
+              negativeControl: this.state.negativeControl
+            }
+            }}><span className="challengeLinkText">Start</span></Link>
+        </Button>
       </form>
+
     )
   }
 

@@ -4,24 +4,37 @@ import Result from './Result';
 import Questions from './Questions';
 import {Label, Well, ProgressBar} from 'react-bootstrap';
 import Constants from '../utilities/Constants';
+import {Button} from 'react-bootstrap';
 
 class Quiz extends Component {
     constructor(props) {
         super(props);
         this.state= {
             correctAnswers: 0,
-            wrongAnswers: 0
+            wrongAnswers: 0,
+            endChallenge: false
         }
-        this.timeAllowedInSeconds = 60;
+        this.timeAllowedInSeconds = props.location.state? (
+            props.location.state.timeControl==='No limit'?-1: props.location.state.timeControl*60)
+            :60;
     }
 
     render() {
-        return (
-            <Countdown
-                date={Date.now() + this.timeAllowedInSeconds * 1000}
-                renderer={this.renderer}
-            />
-        );
+        if(this.timeAllowedInSeconds!==-1) {
+            return (
+                <Countdown
+                    date={Date.now() + this.timeAllowedInSeconds * 1000}
+                    renderer={this.renderer}
+                />
+            );
+        } else {
+            return (
+                <Countdown
+                    date={Date.now() + 100000 * 1000}
+                    renderer={this.renderer}
+                />
+            );
+        }
     }
 
     CompletionDisplay = () => {
@@ -32,7 +45,8 @@ class Quiz extends Component {
         )
     ;}
     renderer = ({ hours, minutes, seconds, completed }) => {
-        if (completed) {
+        let timeRemaining = parseInt(seconds,10) + parseInt(minutes,10)*60;
+        if (completed || this.state.endChallenge) {
             // Render a complete state
             return this.CompletionDisplay();
         } else {
@@ -43,14 +57,23 @@ class Quiz extends Component {
                         <h5>
                         <Label bsStyle="success">{this.state.correctAnswers} CORRECT</Label>
                         <Label bsStyle="danger">{this.state.wrongAnswers} WRONG</Label>
+                        <div className="text-right">
+                            <Button bsStyle="primary" onClick={() => {this.setState({endChallenge:true})}}>
+                                <span className="challengeLinkText">End Challenge</span>
+                            </Button>
+                        </div>
                         </h5>
                     </Well>
+                    {this.timeAllowedInSeconds!==-1 && 
+                    <div>
                     <p>Time Remaining: {hours}:{minutes}:{seconds}</p>
                     <span>
-                        <ProgressBar active striped bsStyle={this.getProgressBarStyleAccordingToTimeLeft(seconds)} min={0} max={this.timeAllowedInSeconds} now={parseInt(seconds, 10)}/>
+                        <ProgressBar active striped bsStyle={this.getProgressBarStyleAccordingToTimeLeft(timeRemaining)} min={0} max={this.timeAllowedInSeconds} now={timeRemaining}/>
 
                     </span>
+                    </div>}
                     <Questions quizType={this.props.quizType} updateQuizResults={this.updateQuizResults}/>
+
                 </div>;
         }
         };
